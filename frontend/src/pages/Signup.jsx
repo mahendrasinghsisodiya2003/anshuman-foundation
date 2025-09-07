@@ -18,15 +18,15 @@ export default function Signup() {
         credentials: "include", // include cookies
         body: JSON.stringify({ name, email, password }),
       });
+const data = await res.json(); // read response body once
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Signup failed");
-      }
+if (!res.ok) {
+  throw new Error(data.error || "Signup failed");
+}
 
-      const data = await res.json();
-      login(data.user); // save user in context
-      navigate("/dashboard");
+login(data.user); // save user in context
+navigate("/dashboard");
+
     } catch (err) {
       alert(err.message);
     }

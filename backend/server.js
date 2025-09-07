@@ -9,10 +9,19 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "https://anshuman-foundation.vercel.app", // Vercel
+  "http://localhost:5173"                   // Local dev
+];
+
 app.use(cors({
-  origin: "https://anshuman-foundation.vercel.app",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+    else callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/resumes", resumeRoutes);
 
