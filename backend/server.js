@@ -9,22 +9,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = [
-  process.env.CLIENT_URL,    // Vercel frontend
-  "http://localhost:5173",   // local dev
-  "http://localhost:5174"
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: process.env.CLIENT_URL.trim(), // remove extra spaces
   credentials: true
 }));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/resumes", resumeRoutes);
 
