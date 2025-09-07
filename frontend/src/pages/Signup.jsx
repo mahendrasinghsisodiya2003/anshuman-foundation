@@ -12,17 +12,20 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/signup", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include", 
-  body: JSON.stringify({ name, email, password }),
-});
+      const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // include cookies
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Signup failed");
+      }
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
-
-      login(data.user); // save user to context
+      login(data.user); // save user in context
       navigate("/dashboard");
     } catch (err) {
       alert(err.message);
@@ -36,7 +39,6 @@ const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/sign
           ✨ Create an Account
         </h2>
         <form onSubmit={handleSignup} className="space-y-5">
-          {/* Full Name */}
           <div>
             <label className="block text-gray-600 mb-2">Full Name</label>
             <input
@@ -47,7 +49,6 @@ const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/sign
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             />
           </div>
-          {/* Email */}
           <div>
             <label className="block text-gray-600 mb-2">Email</label>
             <input
@@ -58,7 +59,6 @@ const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/sign
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             />
           </div>
-          {/* Password */}
           <div>
             <label className="block text-gray-600 mb-2">Password</label>
             <input
@@ -78,10 +78,7 @@ const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/sign
         </form>
         <p className="text-center text-gray-600 mt-4">
           Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-blue-600 font-semibold hover:underline"
-          >
+          <Link to="/login" className="text-blue-600 font-semibold hover:underline">
             Log in
           </Link>
         </p>

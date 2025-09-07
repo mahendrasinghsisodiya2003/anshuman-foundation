@@ -10,10 +10,9 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "*",
+  origin: "https://anshuman-foundation.vercel.app",
   credentials: true
 }));
-
 app.use("/api/auth", authRoutes);
 app.use("/api/resumes", resumeRoutes);
 

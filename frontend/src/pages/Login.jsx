@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../lib/auth.jsx";
+import { useAuth } from "../lib/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,13 +14,17 @@ export default function Login() {
       const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        credentials: "include", // include cookies
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
 
-      login(data.user); // save user to context
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Login failed");
+      }
+
+      const data = await res.json();
+      login(data.user); // save user in context
       navigate("/dashboard");
     } catch (err) {
       alert(err.message);
@@ -34,7 +38,6 @@ export default function Login() {
           Resume Platform
         </h2>
         <form onSubmit={handleLogin} className="space-y-5">
-          {/* Email */}
           <div>
             <label className="block text-gray-600 mb-2">Email</label>
             <input
@@ -45,7 +48,6 @@ export default function Login() {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             />
           </div>
-          {/* Password */}
           <div>
             <label className="block text-gray-600 mb-2">Password</label>
             <input
@@ -56,7 +58,10 @@ export default function Login() {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             />
           </div>
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
             Login
           </button>
         </form>
