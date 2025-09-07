@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
-  "https://anshuman-foundation.vercel.app", // Vercel
+  "https://anshumat-foundation-78bq.vercel.app", // Vercel
   "http://localhost:5173"                   // Local dev
 ];
 
