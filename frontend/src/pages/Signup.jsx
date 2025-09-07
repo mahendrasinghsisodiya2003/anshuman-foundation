@@ -15,7 +15,7 @@ export default function Signup() {
 const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/signup", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  credentials: "include",   // 👈 add this
+  credentials: "include", 
   body: JSON.stringify({ name, email, password }),
 });
 
