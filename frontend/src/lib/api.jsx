@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://anshuman-foundation.onrender.com/api",
+  baseURL: "https://anshuman-foundations.onrender.com/api",
   withCredentials: true,
 });
 

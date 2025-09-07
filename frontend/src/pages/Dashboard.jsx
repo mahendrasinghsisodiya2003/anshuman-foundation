@@ -76,7 +76,7 @@ export default function Dashboard() {
                 🗑️ Delete
               </button>
               <a
-                href={`http://localhost:5000/api/resumes/${resume._id}/download`}
+                href={`https://anshuman-foundations.onrender.com/${resume._id}/download`}
                 className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow transition"
               >
                 ⬇️ Download

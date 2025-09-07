@@ -12,7 +12,7 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-const res = await fetch("https://anshuman-foundation.onrender.com/api/auth/signup", {
+const res = await fetch("https://anshuman-foundations.onrender.com/api/auth/signup", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   credentials: "include",   // 👈 add this
