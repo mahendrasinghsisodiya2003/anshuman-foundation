@@ -9,6 +9,12 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  process.env.CLIENT_URL,    // Vercel frontend
+  "http://localhost:5173",   // local dev
+  "http://localhost:5174"
+];
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
